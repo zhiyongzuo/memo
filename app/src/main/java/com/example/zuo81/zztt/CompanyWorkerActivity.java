@@ -7,6 +7,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -70,6 +71,7 @@ public class CompanyWorkerActivity extends AppCompatActivity {
         adapter.register(Category.class, new CategoryViewBinder());
         adapter.register(Name.class, new NameViewBinder(CompanyWorkerActivity.this));
         rv.setLayoutManager(new LinearLayoutManager(CompanyWorkerActivity.this));
+        //rv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         mItems = new Items();
         mItems.add(new Category("单位成员"));
         if (list != null) {

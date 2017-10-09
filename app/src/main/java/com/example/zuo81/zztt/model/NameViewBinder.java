@@ -1,18 +1,24 @@
 package com.example.zuo81.zztt.model;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.zuo81.zztt.CompanyWorkerActivity;
 import com.example.zuo81.zztt.DetailActivity;
 import com.example.zuo81.zztt.R;
+import com.example.zuo81.zztt.ob.ObservableManager;
+import com.example.zuo81.zztt.utils.DBUtils;
 import com.example.zuo81.zztt.utils.LetterTileProvider;
+import com.orhanobut.logger.Logger;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.drakeet.multitype.ItemViewBinder;
@@ -20,6 +26,8 @@ import me.drakeet.multitype.ItemViewBinder;
 import static com.example.zuo81.zztt.MainActivity.COMPANYWORKERACTIVITY_COMPANY_NAME;
 import static com.example.zuo81.zztt.MainActivity.COMPANYWORKERACTIVITY_ID;
 import static com.example.zuo81.zztt.MainActivity.COMPANYWORKERACTIVITY_POSITION;
+import static com.example.zuo81.zztt.fragment.ContactFragment.FUNCTION_WITH_PARAM_AND_RESULT;
+import static com.example.zuo81.zztt.fragment.ContactFragment.FUNCTION_WITH_PARAM_AND_RESULT_TWO;
 
 
 /**
@@ -28,7 +36,6 @@ import static com.example.zuo81.zztt.MainActivity.COMPANYWORKERACTIVITY_POSITION
 public class NameViewBinder extends ItemViewBinder<Name, NameViewBinder.ViewHolder> {
     private Context mContext;
     private LetterTileProvider mLetterTileProvider;
-    private long id;
 
     public NameViewBinder(Context mContext) {
         this.mContext = mContext;
@@ -69,7 +76,27 @@ public class NameViewBinder extends ItemViewBinder<Name, NameViewBinder.ViewHold
                     mContext.startActivity(intent);
                 }
             });
-
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                    builder.setTitle(R.string.contact).setMessage("   将要删除此联系人:" + mTextView.getText());
+                    builder.setNegativeButton("确定", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            Logger.d(Long.parseLong(textViewId.getText().toString()) +"  " + getAdapterPosition());
+                            DBUtils.deleteFromId(Long.parseLong(textViewId.getText().toString()));
+                            Object notify = ObservableManager.newInstance()
+                                    .notify(FUNCTION_WITH_PARAM_AND_RESULT, false, getAdapterPosition());
+                            Object notify2 = ObservableManager.newInstance()
+                                    .notify(FUNCTION_WITH_PARAM_AND_RESULT_TWO);
+                            Toast.makeText(mContext, "删除成功", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    builder.setPositiveButton("取消", null);
+                    builder.show();
+                    return false;
+                }
+            });
 
         }
     }

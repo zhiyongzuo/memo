@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -48,9 +49,7 @@ public class CompanyFragment extends Fragment implements Function {
     private RecyclerView rv;
     private MultiTypeAdapter multiTypeAdapter;
     private Items items2;
-    private Items items;
     private LinearLayoutManager linearLayoutManager;
-    private List companyList;
 
     public CompanyFragment() {
     }
@@ -91,8 +90,8 @@ public class CompanyFragment extends Fragment implements Function {
     }
 
     private void init() {
-        items = new Items();
-        companyList = new ArrayList<>();
+        Items items = new Items();
+        List companyList = new ArrayList<>();
         List<PhoneInfo> list = DBUtils.getAllPhoneInfo();
         for(int i=0; i<list.size(); i++) {
             String s = list.get(i).getCompany();
@@ -107,6 +106,7 @@ public class CompanyFragment extends Fragment implements Function {
 
     @Override
     public Object function(Object[] data) {
+        Logger.d("function");
         init();
         return null;
     }

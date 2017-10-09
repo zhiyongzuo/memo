@@ -1,15 +1,18 @@
 package com.example.zuo81.zztt.fragment;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 
 import com.example.zuo81.zztt.AddActivity;
 import com.example.zuo81.zztt.R;
@@ -73,11 +76,13 @@ public class ContactFragment extends Fragment implements Function {
         searchView.setIconifiedByDefault(true);
         searchView.setOnQueryTextListener(onQueryTextListener);
         searchView.setQueryHint("请输入查询姓名");
+        closeKeyboard();
 
         if (linearLayoutManager == null) {
             linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, true);
             linearLayoutManager.setStackFromEnd(true);
         }
+        //rv.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
         rv.setLayoutManager(linearLayoutManager);
         multiTypeAdapter = new MultiTypeAdapter();
         multiTypeAdapter.register(Name.class, new NameViewBinder(getContext()));
@@ -141,5 +146,13 @@ public class ContactFragment extends Fragment implements Function {
             multiTypeAdapter.notifyItemRemoved((int)Arrays.asList(data).get(1));*/
         }
         return null;
+    }
+
+    private void closeKeyboard() {
+        View view = getActivity().getWindow().peekDecorView();
+        if (view != null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 }

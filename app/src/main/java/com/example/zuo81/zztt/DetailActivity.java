@@ -161,30 +161,6 @@ public class DetailActivity extends AppCompatActivity {
         imageView.setImageBitmap(bitmap);    //设置Bitmap
     }
 
-    public void delete(View v) {
-        buildDialog();
-    }
-
-    //删除时弹出的提示对话框
-    private void buildDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(DetailActivity.this);
-        builder.setTitle("将要删除联系人");
-        builder.setNegativeButton("确定", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                Logger.d(id +"  " + position);
-                DBUtils.deleteFromId(id);
-                Object notify = ObservableManager.newInstance()
-                        .notify(FUNCTION_WITH_PARAM_AND_RESULT,false, position);
-                Object notify2 = ObservableManager.newInstance()
-                        .notify(FUNCTION_WITH_PARAM_AND_RESULT_TWO,false, position);
-                Toast.makeText(DetailActivity.this, "删除成功", Toast.LENGTH_SHORT).show();
-                finish();
-            }
-        });
-        builder.setPositiveButton("取消", null);
-        builder.show();
-    }
-
     public void back(View v) {
        finish();
     }
