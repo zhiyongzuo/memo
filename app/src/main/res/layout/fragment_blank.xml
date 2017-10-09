@@ -1,0 +1,30 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.zuo81.zztt.fragment.ContactFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <RelativeLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true" android:layout_alignParentStart="true">
+
+        <android.support.v7.widget.SearchView
+            android:id="@+id/search_view"
+            android:layout_centerInParent="true"
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />
+
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/activity_vertical_margin"
+        android:layout_below="@+id/linearLayout" />
+
+</RelativeLayout>
