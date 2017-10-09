@@ -32,8 +32,6 @@ public class Name2ViewBinder extends ItemViewBinder<Name, Name2ViewBinder.ViewHo
         this.mContext = mContext;
     }
 
-
-
     @NonNull
     @Override
     protected Name2ViewBinder.ViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {

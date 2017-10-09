@@ -18,6 +18,10 @@ public class Name {
         this.id = id;
     }
 
+    public Name(String name) {
+        this.name = name;
+    }
+
     public Name(String name, long id) {
         this.name = name;
         this.id = id;

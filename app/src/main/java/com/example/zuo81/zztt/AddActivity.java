@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.zuo81.zztt.fragment.ContactFragment.FUNCTION_WITH_PARAM_AND_RESULT;
+import static com.example.zuo81.zztt.fragment.ContactFragment.FUNCTION_WITH_PARAM_AND_RESULT_TWO;
 
 
 public class AddActivity extends AppCompatActivity{
@@ -90,6 +91,8 @@ public class AddActivity extends AppCompatActivity{
             Logger.d(DBUtils.getAllPhoneInfo().size());
             Object notify = ObservableManager.newInstance()
                     .notify(FUNCTION_WITH_PARAM_AND_RESULT,true, name, phoneInfo.getId());
+            Object notify2 = ObservableManager.newInstance()
+                    .notify(FUNCTION_WITH_PARAM_AND_RESULT_TWO,true, name, phoneInfo.getId());
             Toast.makeText(this, "添加成功", Toast.LENGTH_SHORT).show();
             finish();
         }

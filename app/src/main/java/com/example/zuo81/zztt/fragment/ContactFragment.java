@@ -38,6 +38,7 @@ import me.drakeet.multitype.MultiTypeAdapter;
 public class ContactFragment extends Fragment implements Function {
     public static int REQUEST_CODE_ASK_PERMISSIONS = 123;
     public static String FUNCTION_WITH_PARAM_AND_RESULT = "FUNCTION_WITH_PARAM_AND_RESULT";
+    public static String FUNCTION_WITH_PARAM_AND_RESULT_TWO = "FUNCTION_WITH_PARAM_AND_RESULT_TWO";
     private SearchView searchView;
     private RecyclerView rv;
     private MultiTypeAdapter multiTypeAdapter;

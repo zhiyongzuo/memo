@@ -46,6 +46,7 @@ import static com.example.zuo81.zztt.MainActivity.COMPANYWORKERACTIVITY_COMPANY_
 import static com.example.zuo81.zztt.MainActivity.COMPANYWORKERACTIVITY_ID;
 import static com.example.zuo81.zztt.MainActivity.COMPANYWORKERACTIVITY_POSITION;
 import static com.example.zuo81.zztt.fragment.ContactFragment.FUNCTION_WITH_PARAM_AND_RESULT;
+import static com.example.zuo81.zztt.fragment.ContactFragment.FUNCTION_WITH_PARAM_AND_RESULT_TWO;
 
 
 public class DetailActivity extends AppCompatActivity {
@@ -174,6 +175,8 @@ public class DetailActivity extends AppCompatActivity {
                 DBUtils.deleteFromId(id);
                 Object notify = ObservableManager.newInstance()
                         .notify(FUNCTION_WITH_PARAM_AND_RESULT,false, position);
+                Object notify2 = ObservableManager.newInstance()
+                        .notify(FUNCTION_WITH_PARAM_AND_RESULT_TWO,false, position);
                 Toast.makeText(DetailActivity.this, "删除成功", Toast.LENGTH_SHORT).show();
                 finish();
             }

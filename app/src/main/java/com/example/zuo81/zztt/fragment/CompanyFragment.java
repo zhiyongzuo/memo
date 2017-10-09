@@ -4,6 +4,7 @@ package com.example.zuo81.zztt.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,10 +21,14 @@ import com.example.zuo81.zztt.model.Name;
 import com.example.zuo81.zztt.model.Name2ViewBinder;
 import com.example.zuo81.zztt.model.NameViewBinder;
 import com.example.zuo81.zztt.model.PhoneInfo;
+import com.example.zuo81.zztt.ob.Function;
+import com.example.zuo81.zztt.ob.ObservableManager;
 import com.example.zuo81.zztt.utils.DBUtils;
+import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,19 +37,35 @@ import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
 
 import static com.example.zuo81.zztt.MainActivity.COMPANYWORKERACTIVITY_COMPANY_NAME;
+import static com.example.zuo81.zztt.fragment.ContactFragment.FUNCTION_WITH_PARAM_AND_RESULT;
+import static com.example.zuo81.zztt.fragment.ContactFragment.FUNCTION_WITH_PARAM_AND_RESULT_TWO;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CompanyFragment extends Fragment {
+public class CompanyFragment extends Fragment implements Function {
     private SearchView searchView;
     private RecyclerView rv;
     private MultiTypeAdapter multiTypeAdapter;
     private Items items2;
+    private Items items;
+    private LinearLayoutManager linearLayoutManager;
+    private List companyList;
 
     public CompanyFragment() {
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        ObservableManager.newInstance().removeObserver(this);
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ObservableManager.newInstance().registerObserver(FUNCTION_WITH_PARAM_AND_RESULT_TWO, this);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,26 +78,37 @@ public class CompanyFragment extends Fragment {
         searchView.setOnQueryTextListener(onQueryTextListener);
         searchView.setQueryHint("请输入查询姓名");
 
-        rv.setLayoutManager(new LinearLayoutManager(getContext()));
+        if (linearLayoutManager == null) {
+            linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, true);
+            linearLayoutManager.setStackFromEnd(true);
+        }
+        rv.setLayoutManager(linearLayoutManager);
         multiTypeAdapter = new MultiTypeAdapter();
         multiTypeAdapter.register(Name.class, new Name2ViewBinder(getContext()));
+        rv.setAdapter(multiTypeAdapter);
+        init();
         return view;
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        Items items = new Items();
+    private void init() {
+        items = new Items();
+        companyList = new ArrayList<>();
         List<PhoneInfo> list = DBUtils.getAllPhoneInfo();
-        Logger.d(list.size());
-        for(int i=list.size()-1; i>-1; i--) {
+        for(int i=0; i<list.size(); i++) {
             String s = list.get(i).getCompany();
-            if (s!=null && !s.equals("")) {
-                items.add(new Name(list.get(i).getCompany(), list.get(i).getId()));
+            if (s!=null && !s.equals("") && !companyList.contains(s)) {
+                companyList.add(s);
+                items.add(new Name(s));
             }
         }
         multiTypeAdapter.setItems(items);
-        rv.setAdapter(multiTypeAdapter);
+        multiTypeAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public Object function(Object[] data) {
+        init();
+        return null;
     }
 
     SearchView.OnQueryTextListener onQueryTextListener = new SearchView.OnQueryTextListener() {
