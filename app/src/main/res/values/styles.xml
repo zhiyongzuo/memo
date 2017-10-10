@@ -29,4 +29,11 @@
         <item name="android:background">@color/black_overlay</item>
     </style>
 
+    <style name="StartAppTheme" parent="Theme.AppCompat.Light">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowBackground">@drawable/layout_list_start_pic</item>
+    </style>
+
 </resources>

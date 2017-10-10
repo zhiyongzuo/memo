@@ -33,7 +33,7 @@
             android:name=".ADActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_ad"
-            android:theme="@style/FullscreenTheme">
+            android:theme="@style/StartAppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
