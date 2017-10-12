@@ -98,7 +98,7 @@ public class AddActivity extends AppCompatActivity{
                 Object notify = ObservableManager.newInstance()
                         .notify(ITEM_CHANGE_CONTACT, ITEM_ADD_CONTACT, name, phoneInfoModel.getId());
                 Object notify2 = ObservableManager.newInstance()
-                        .notify(ITEM_CHANGE_COMPANY);
+                        .notify(ITEM_CHANGE_COMPANY, ITEM_CHANGE_COMPANY);
                 Toast.makeText(this, "添加成功", Toast.LENGTH_SHORT).show();
                 finish();
             } else {

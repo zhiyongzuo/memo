@@ -88,7 +88,7 @@ public class NameViewBinder extends ItemViewBinder<Name, NameViewBinder.ViewHold
                             Object notify = ObservableManager.newInstance()
                                     .notify(ITEM_CHANGE_CONTACT, ITEM_DELETE_CONTACT, getAdapterPosition());
                             Object notify2 = ObservableManager.newInstance()
-                                    .notify(ITEM_CHANGE_COMPANY);
+                                    .notify(ITEM_CHANGE_COMPANY, ITEM_CHANGE_COMPANY);
                             Toast.makeText(view.getContext(), "删除成功", Toast.LENGTH_SHORT).show();
                         }
                     });

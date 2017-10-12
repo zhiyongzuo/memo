@@ -73,6 +73,11 @@
                 android:resource="@xml/provider_paths"/>
         </provider>
 
+        <service
+            android:name=".service.killSelfService"
+            android:process=".killSelfService"
+            />
+
     </application>
 
 </manifest>

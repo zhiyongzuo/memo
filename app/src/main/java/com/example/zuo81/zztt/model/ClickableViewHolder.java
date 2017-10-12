@@ -8,6 +8,7 @@ import android.widget.Toast;
 import com.example.zuo81.zztt.ADActivity;
 import com.example.zuo81.zztt.MainActivity;
 import com.example.zuo81.zztt.ob.ObservableManager;
+import com.example.zuo81.zztt.utils.RestartAPPTool;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -15,6 +16,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.channels.FileChannel;
 
 import static com.example.zuo81.zztt.utils.ConstantHelper.DATA_DATABASE_PATH;
 import static com.example.zuo81.zztt.utils.ConstantHelper.ITEM_CHANGE_COMPANY;
@@ -51,11 +53,12 @@ public class ClickableViewHolder extends RecyclerView.ViewHolder {
                             break;
                         case LOCAL_DOWNLOAD:
                             deleteOutputFileAndCreateInputFile(DATA_DATABASE_PATH, SD_DATABASE_PATH);
-                            Object notify = ObservableManager.newInstance()
+                            RestartAPPTool.restartAPP(view.getContext(), 0);
+                            /*Object notify = ObservableManager.newInstance()
                                     .notify(ITEM_CHANGE_CONTACT, ITEM_CHANGE_CONTACT);
                             Object notify2 = ObservableManager.newInstance()
-                                    .notify(ITEM_CHANGE_COMPANY, ITEM_CHANGE_COMPANY);
-                            Toast.makeText(view.getContext(), "已还原至上次备份", Toast.LENGTH_SHORT).show();
+                                    .notify(ITEM_CHANGE_COMPANY, ITEM_CHANGE_COMPANY);*/
+                            //Toast.makeText(view.getContext(), "已还原至上次备份", Toast.LENGTH_SHORT).show();
                             break;
                         case ME:
                             break;
@@ -74,7 +77,14 @@ public class ClickableViewHolder extends RecyclerView.ViewHolder {
                 outputDBFile.delete();
             }
             outputDBFile.createNewFile();
-            File inputDBFile = new File(INPUT_PATH);
+
+            FileChannel inChannel = new FileInputStream(new File(INPUT_PATH)).getChannel();
+            FileChannel outChannel = new FileOutputStream(new File(OUTPUT_PATH)).getChannel();
+            inChannel.transferTo(0, inChannel.size(), outChannel);
+            inChannel.close();
+            outChannel.close();
+
+            /*File inputDBFile = new File(INPUT_PATH);
             InputStream ips = new FileInputStream(inputDBFile);
             OutputStream ops = new FileOutputStream(outputDBFile);
             byte[] bytes = new byte[1024];
@@ -82,7 +92,7 @@ public class ClickableViewHolder extends RecyclerView.ViewHolder {
                 ops.write(bytes);
             }
             ips.close();
-            ops.close();
+            ops.close();*/
         } catch (IOException e) {
             e.printStackTrace();
         }
