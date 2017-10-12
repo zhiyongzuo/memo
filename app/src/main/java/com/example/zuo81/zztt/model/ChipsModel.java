@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 
 import org.litepal.crud.DataSupport;
 
-public class ChipsEntity extends DataSupport {
+public class ChipsModel extends DataSupport {
     @DrawableRes
     private Integer drawableResId;
 
@@ -21,24 +21,14 @@ public class ChipsEntity extends DataSupport {
     private String resource;
 
     private String father;
-    private Integer repeatStr;
-    /*private Integer number;
+    private long id;
 
-    public void setPhoneNumber(Integer number) {
-        this.number = number;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public Integer getPhoneNumber() {
-        return number;
-    }*/
-
-
-    public void setRepeatStr(Integer repeatStr) {
-        this.repeatStr = repeatStr;
-    }
-
-    public Integer getRepeatStr() {
-        return repeatStr;
+    public long getId() {
+        return id;
     }
 
     public void setFather(String father) {

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="16dp"
+    android:paddingLeft="12dp"
+    android:paddingBottom="16dp"
+    android:paddingRight="16dp"
+    android:layout_marginBottom="12dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginLeft="12dp"
+    android:layout_marginRight="12dp"
+    android:background="@drawable/card">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/item_card_circle_image_view"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        tools:src="#000000"/>
+    <TextView
+        android:id="@+id/item_card_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/item_card_circle_image_view"
+        android:layout_toEndOf="@id/item_card_circle_image_view"
+        android:textSize="@dimen/font"
+        android:paddingLeft="15dp"
+        android:paddingTop="12dp"
+        tools:text="#000000"/>
+
+</RelativeLayout>

@@ -18,9 +18,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.zuo81.zztt.model.PhoneInfo;
+import com.example.zuo81.zztt.model.PhoneInfoModel;
 import com.example.zuo81.zztt.ob.Function;
-import com.example.zuo81.zztt.ob.ObservableInterface;
 import com.example.zuo81.zztt.ob.ObservableManager;
 import com.example.zuo81.zztt.utils.DBUtils;
 import com.example.zuo81.zztt.utils.PhotoHelper;
@@ -31,8 +30,9 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.zuo81.zztt.fragment.ContactFragment.FUNCTION_WITH_PARAM_AND_RESULT;
-import static com.example.zuo81.zztt.fragment.ContactFragment.FUNCTION_WITH_PARAM_AND_RESULT_TWO;
+import static com.example.zuo81.zztt.utils.ConstantHelper.ITEM_ADD_CONTACT;
+import static com.example.zuo81.zztt.utils.ConstantHelper.ITEM_CHANGE_CONTACT;
+import static com.example.zuo81.zztt.utils.ConstantHelper.ITEM_CHANGE_COMPANY;
 
 
 public class AddActivity extends AppCompatActivity{
@@ -77,24 +77,34 @@ public class AddActivity extends AppCompatActivity{
         company = et_company.getText().toString().trim();
         photo=imgPath;
         if (name.equals("") || phone.equals(""))
-            Toast.makeText(AddActivity.this, "请填写姓名和手机号", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AddActivity.this, "姓名和手机号1必须填", Toast.LENGTH_SHORT).show();
         else {
-            PhoneInfo phoneInfo = new PhoneInfo();
-            phoneInfo.setName(name);
-            phoneInfo.setPhoneNumber(phone);
-            phoneInfo.setPhoneNumber2(phone2);
-            phoneInfo.setEmail(email);
-            phoneInfo.setSex(sex);
-            phoneInfo.setCompany(company);
-            phoneInfo.setPhoto(photo);
-            DBUtils.savePhoneInfo(phoneInfo);
-            Logger.d(DBUtils.getAllPhoneInfo().size());
-            Object notify = ObservableManager.newInstance()
-                    .notify(FUNCTION_WITH_PARAM_AND_RESULT,true, name, phoneInfo.getId());
-            Object notify2 = ObservableManager.newInstance()
-                    .notify(FUNCTION_WITH_PARAM_AND_RESULT_TWO,true, name, phoneInfo.getId());
-            Toast.makeText(this, "添加成功", Toast.LENGTH_SHORT).show();
-            finish();
+            List<PhoneInfoModel> phoneInfoList = DBUtils.getAllPhoneInfo();
+            List<String> nameList = new ArrayList<>();
+            for(int i=0; i<phoneInfoList.size(); i++) {
+                nameList.add(phoneInfoList.get(i).getName());
+            }
+            if(!nameList.contains(name)) {
+                PhoneInfoModel phoneInfoModel = new PhoneInfoModel();
+                phoneInfoModel.setName(name);
+                phoneInfoModel.setPhoneNumber(phone);
+                phoneInfoModel.setPhoneNumber2(phone2);
+                phoneInfoModel.setEmail(email);
+                phoneInfoModel.setSex(sex);
+                phoneInfoModel.setCompany(company);
+                phoneInfoModel.setPhoto(photo);
+                DBUtils.savePhoneInfo(phoneInfoModel);
+                Logger.d(DBUtils.getAllPhoneInfo().size());
+                Object notify = ObservableManager.newInstance()
+                        .notify(ITEM_CHANGE_CONTACT, ITEM_ADD_CONTACT, name, phoneInfoModel.getId());
+                Object notify2 = ObservableManager.newInstance()
+                        .notify(ITEM_CHANGE_COMPANY);
+                Toast.makeText(this, "添加成功", Toast.LENGTH_SHORT).show();
+                finish();
+            } else {
+                Toast.makeText(this, name + "  已存在,不能重复添加", Toast.LENGTH_SHORT).show();
+            }
+
         }
     }
     /**

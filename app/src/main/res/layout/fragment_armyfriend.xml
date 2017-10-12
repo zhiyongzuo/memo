@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/editsharp"
             android:textColor="@color/colorPrimaryDark"
-            android:hint="请输入姓名"/>
+            android:hint="@string/input_name"/>
         <Button
             android:id="@+id/btnInsert"
             android:layout_width="80dp"
@@ -35,6 +35,6 @@
             android:layout_below="@id/et"
             android:layout_marginTop="10dp"
             android:layout_centerInParent="true"
-            android:text="确定" />
+            android:text="@string/add" />
     </RelativeLayout>
 </RelativeLayout>

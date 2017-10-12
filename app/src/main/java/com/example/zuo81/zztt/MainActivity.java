@@ -24,10 +24,14 @@ import android.widget.Toast;
 import com.example.zuo81.zztt.adapter.MyFragmentPagerAdapter;
 import com.example.zuo81.zztt.fragment.CompanyFragment;
 import com.example.zuo81.zztt.fragment.ContactFragment;
+import com.example.zuo81.zztt.fragment.MeFragment;
 import com.example.zuo81.zztt.utils.PhotoHelper;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.zuo81.zztt.utils.ConstantHelper.SD_DIRECTORY_PATH;
 
 public class MainActivity extends AppCompatActivity {
     public static String COMPANYWORKERACTIVITY_COMPANY_NAME = "COMPANY_WORKER_ACTIVITY_COMPANY_NAME";
@@ -45,19 +49,27 @@ public class MainActivity extends AppCompatActivity {
         ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
-        tabLayout.addTab(tabLayout.newTab().setText("按姓名排序"));
-        tabLayout.addTab(tabLayout.newTab().setText("按单位排序"));
+        File directoryFile = new File(SD_DIRECTORY_PATH);
+        if(!directoryFile.exists()) {
+            directoryFile.mkdir();
+        }
+
+        tabLayout.addTab(tabLayout.newTab());
+        tabLayout.addTab(tabLayout.newTab());
+        tabLayout.addTab(tabLayout.newTab());
         if(list == null) {
             list = new ArrayList<>();
         }
         list.add(new ContactFragment());
         list.add(new CompanyFragment());
+        list.add(new MeFragment());
         adapter = new MyFragmentPagerAdapter(getSupportFragmentManager(), list);
         viewPager.setAdapter(adapter);
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
         tabLayout.setupWithViewPager(viewPager);
-        tabLayout.getTabAt(0).setText("按姓名排序");//标题不会需要手动添加才显示。必须在setupWithViewPager之后添加
-        tabLayout.getTabAt(1).setText("按单位排序");
+        tabLayout.getTabAt(0).setText("姓名");//标题不会需要手动添加才显示。必须在setupWithViewPager之后添加
+        tabLayout.getTabAt(1).setText("单位");
+        tabLayout.getTabAt(2).setText("我");
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

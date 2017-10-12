@@ -6,7 +6,7 @@ import org.litepal.crud.DataSupport;
  * Created by tomsdeath on 2017/8/15.
  */
 
-public class PhoneInfo extends DataSupport {
+public class PhoneInfoModel extends DataSupport {
     private String name;
     private String phoneNumber;
     private String phoneNumber2;

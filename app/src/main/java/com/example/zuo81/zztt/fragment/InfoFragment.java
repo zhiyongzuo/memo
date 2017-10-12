@@ -18,7 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.zuo81.zztt.R;
-import com.example.zuo81.zztt.model.PhoneInfo;
+import com.example.zuo81.zztt.model.PhoneInfoModel;
 import com.example.zuo81.zztt.service.MyService;
 import com.example.zuo81.zztt.utils.DBUtils;
 import com.orhanobut.logger.Logger;
@@ -30,7 +30,7 @@ import static com.example.zuo81.zztt.DetailActivity.DETAIL_ACTIVITY_NAME;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class BasicFragment extends Fragment {
+public class InfoFragment extends Fragment {
     private TextView tv_name;
     private EditText tv_phone;
     private EditText tv_phone2;
@@ -48,10 +48,10 @@ public class BasicFragment extends Fragment {
     private String email = "";
     private String sex = "";
     private String company = "";
-    private PhoneInfo phoneInfo;
+    private PhoneInfoModel phoneInfoModel;
     private long id;
 
-    public BasicFragment() {
+    public InfoFragment() {
         // Required empty public constructor
     }
 
@@ -75,7 +75,10 @@ public class BasicFragment extends Fragment {
             name = (String)bundle.get(DETAIL_ACTIVITY_NAME);
             id = (long)bundle.get(DETAIL_ACTIVITY_ID);
         }
-        phoneInfo = DBUtils.getPhoneInfoFromId(id);
+        phoneInfoModel = DBUtils.getPhoneInfoFromId(id);
+        if(phoneInfoModel==null) {
+            phoneInfoModel = DBUtils.getPhoneInfoFromName(name).get(0);
+        }
 
         p1.setOnClickListener(listen2);
         msg1.setOnClickListener(listen2);
@@ -88,11 +91,11 @@ public class BasicFragment extends Fragment {
         tv_sex.setEnabled(false);
         tv_company.setEnabled(false);
 
-        phone = phoneInfo.getPhoneNumber();
-        phone2 = phoneInfo.getPhoneNumber2();
-        email = phoneInfo.getEmail();
-        sex = phoneInfo.getSex();
-        company = phoneInfo.getCompany();
+        phone = phoneInfoModel.getPhoneNumber();
+        phone2 = phoneInfoModel.getPhoneNumber2();
+        email = phoneInfoModel.getEmail();
+        sex = phoneInfoModel.getSex();
+        company = phoneInfoModel.getCompany();
         Logger.d(phone);
         tv_phone.setText(phone);
         tv_phone2.setText(phone2);
@@ -126,13 +129,13 @@ public class BasicFragment extends Fragment {
                 tv_email.setEnabled(false);
                 tv_sex.setEnabled(false);
                 tv_company.setEnabled(false);
-                PhoneInfo phoneInfo = new PhoneInfo();
-                phoneInfo.setPhoneNumber(tv_phone.getText().toString());
-                phoneInfo.setPhoneNumber2(tv_phone2.getText().toString());
-                phoneInfo.setEmail(tv_email.getText().toString());
-                phoneInfo.setSex(tv_sex.getText().toString());
-                phoneInfo.setCompany(tv_company.getText().toString());
-                DBUtils.updateFromId(phoneInfo, id);
+                PhoneInfoModel phoneInfoModel = new PhoneInfoModel();
+                phoneInfoModel.setPhoneNumber(tv_phone.getText().toString());
+                phoneInfoModel.setPhoneNumber2(tv_phone2.getText().toString());
+                phoneInfoModel.setEmail(tv_email.getText().toString());
+                phoneInfoModel.setSex(tv_sex.getText().toString());
+                phoneInfoModel.setCompany(tv_company.getText().toString());
+                DBUtils.updateFromId(phoneInfoModel, id);
                 if(tv_phone2!=null && tv_phone2.length()>0) {
                     p2.setVisibility(View.VISIBLE);
                     msg2.setVisibility(View.VISIBLE);

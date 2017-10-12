@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.zuo81.zztt.CompanyWorkerActivity;
 import com.example.zuo81.zztt.DetailActivity;
 import com.example.zuo81.zztt.R;
 import com.example.zuo81.zztt.ob.ObservableManager;
@@ -26,8 +25,9 @@ import me.drakeet.multitype.ItemViewBinder;
 import static com.example.zuo81.zztt.MainActivity.COMPANYWORKERACTIVITY_COMPANY_NAME;
 import static com.example.zuo81.zztt.MainActivity.COMPANYWORKERACTIVITY_ID;
 import static com.example.zuo81.zztt.MainActivity.COMPANYWORKERACTIVITY_POSITION;
-import static com.example.zuo81.zztt.fragment.ContactFragment.FUNCTION_WITH_PARAM_AND_RESULT;
-import static com.example.zuo81.zztt.fragment.ContactFragment.FUNCTION_WITH_PARAM_AND_RESULT_TWO;
+import static com.example.zuo81.zztt.utils.ConstantHelper.ITEM_CHANGE_CONTACT;
+import static com.example.zuo81.zztt.utils.ConstantHelper.ITEM_CHANGE_COMPANY;
+import static com.example.zuo81.zztt.utils.ConstantHelper.ITEM_DELETE_CONTACT;
 
 
 /**
@@ -56,7 +56,7 @@ public class NameViewBinder extends ItemViewBinder<Name, NameViewBinder.ViewHold
         holder.mImageView.setImageBitmap(mLetterTileProvider.getLetterTile(name.getName()));
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
         private TextView mTextView;
         private TextView textViewId;
         private CircleImageView mImageView;
@@ -69,27 +69,27 @@ public class NameViewBinder extends ItemViewBinder<Name, NameViewBinder.ViewHold
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(mContext, DetailActivity.class);
+                    Intent intent = new Intent(v.getContext(), DetailActivity.class);
                     intent.putExtra(COMPANYWORKERACTIVITY_COMPANY_NAME, mTextView.getText());
                     intent.putExtra(COMPANYWORKERACTIVITY_ID, Long.parseLong(textViewId.getText().toString()));
                     intent.putExtra(COMPANYWORKERACTIVITY_POSITION, getAdapterPosition());
-                    mContext.startActivity(intent);
+                    v.getContext().startActivity(intent);
                 }
             });
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
-                public boolean onLongClick(View view) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                    builder.setTitle(R.string.contact).setMessage("   将要删除此联系人:" + mTextView.getText());
+                public boolean onLongClick(final View view) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                    builder.setTitle(R.string.contact).setMessage("   将要删除: " + mTextView.getText());
                     builder.setNegativeButton("确定", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
                             Logger.d(Long.parseLong(textViewId.getText().toString()) +"  " + getAdapterPosition());
                             DBUtils.deleteFromId(Long.parseLong(textViewId.getText().toString()));
                             Object notify = ObservableManager.newInstance()
-                                    .notify(FUNCTION_WITH_PARAM_AND_RESULT, false, getAdapterPosition());
+                                    .notify(ITEM_CHANGE_CONTACT, ITEM_DELETE_CONTACT, getAdapterPosition());
                             Object notify2 = ObservableManager.newInstance()
-                                    .notify(FUNCTION_WITH_PARAM_AND_RESULT_TWO);
-                            Toast.makeText(mContext, "删除成功", Toast.LENGTH_SHORT).show();
+                                    .notify(ITEM_CHANGE_COMPANY);
+                            Toast.makeText(view.getContext(), "删除成功", Toast.LENGTH_SHORT).show();
                         }
                     });
                     builder.setPositiveButton("取消", null);

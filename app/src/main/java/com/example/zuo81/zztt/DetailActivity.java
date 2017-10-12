@@ -14,25 +14,22 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import com.example.zuo81.zztt.fragment.ArmyFriendFragment;
-import com.example.zuo81.zztt.fragment.BasicFragment;
-import com.example.zuo81.zztt.fragment.ClassMatesFragment;
-import com.example.zuo81.zztt.fragment.FamilyFragment;
-import com.example.zuo81.zztt.fragment.FellowTownsManFragment;
-import com.example.zuo81.zztt.fragment.FriendFragment;
-import com.example.zuo81.zztt.ob.ObservableManager;
+import com.example.zuo81.zztt.fragment.ArmyFriendRelationFragment;
+import com.example.zuo81.zztt.fragment.InfoFragment;
+import com.example.zuo81.zztt.fragment.ClassMatesRelationFragment;
+import com.example.zuo81.zztt.fragment.FamilyRelationFragment;
+import com.example.zuo81.zztt.fragment.FellowTownsManRelationFragment;
+import com.example.zuo81.zztt.fragment.FriendRelationFragment;
 import com.example.zuo81.zztt.utils.Eyes;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
-import com.example.zuo81.zztt.model.PhoneInfo;
+import com.example.zuo81.zztt.model.PhoneInfoModel;
 import com.example.zuo81.zztt.utils.DBUtils;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
@@ -45,8 +42,6 @@ import static com.ashokvarma.bottomnavigation.BottomNavigationBar.MODE_FIXED;
 import static com.example.zuo81.zztt.MainActivity.COMPANYWORKERACTIVITY_COMPANY_NAME;
 import static com.example.zuo81.zztt.MainActivity.COMPANYWORKERACTIVITY_ID;
 import static com.example.zuo81.zztt.MainActivity.COMPANYWORKERACTIVITY_POSITION;
-import static com.example.zuo81.zztt.fragment.ContactFragment.FUNCTION_WITH_PARAM_AND_RESULT;
-import static com.example.zuo81.zztt.fragment.ContactFragment.FUNCTION_WITH_PARAM_AND_RESULT_TWO;
 
 
 public class DetailActivity extends AppCompatActivity {
@@ -83,14 +78,14 @@ public class DetailActivity extends AppCompatActivity {
         name = intent.getStringExtra(COMPANYWORKERACTIVITY_COMPANY_NAME);
         id = intent.getLongExtra(COMPANYWORKERACTIVITY_ID, 0);
         position = intent.getIntExtra(COMPANYWORKERACTIVITY_POSITION, 0);
-        List<PhoneInfo> list = DBUtils.getPhoneInfoFromName(name);
+        List<PhoneInfoModel> list = DBUtils.getPhoneInfoFromName(name);
         if(list!=null && list.size()>0) {
             photo = list.get(0).getPhoto();
         }
         Eyes.setStatusBarColorForCollapsingToolbar(this, mAppBarLayout, mCollapsingToolbar, toolbar, ContextCompat.getColor(this, R.color.colorPrimary));
 
         ft = getSupportFragmentManager().beginTransaction();
-        final BasicFragment bFragment = new BasicFragment();
+        final InfoFragment bFragment = new InfoFragment();
         bundle = new Bundle();
         bundle.putString(DETAIL_ACTIVITY_NAME, name);
         bundle.putLong(DETAIL_ACTIVITY_ID, id);
@@ -114,27 +109,27 @@ public class DetailActivity extends AppCompatActivity {
                         ft.replace(R.id.frame_layout, bFragment).commit();
                         break;
                     case 1:
-                        ArmyFriendFragment afFragment = new ArmyFriendFragment();
+                        ArmyFriendRelationFragment afFragment = new ArmyFriendRelationFragment();
                         afFragment.setArguments(bundle);
                         ft.replace(R.id.frame_layout, afFragment).commit();
                         break;
                     case 2:
-                        FriendFragment fFragment = new FriendFragment();
+                        FriendRelationFragment fFragment = new FriendRelationFragment();
                         fFragment.setArguments(bundle);
                         ft.replace(R.id.frame_layout, fFragment).commit();
                         break;
                     case 3:
-                        ClassMatesFragment cmFragment = new ClassMatesFragment();
+                        ClassMatesRelationFragment cmFragment = new ClassMatesRelationFragment();
                         cmFragment.setArguments(bundle);
                         ft.replace(R.id.frame_layout, cmFragment).commit();
                         break;
                     case 4:
-                        FamilyFragment familyFragment = new FamilyFragment();
+                        FamilyRelationFragment familyFragment = new FamilyRelationFragment();
                         familyFragment.setArguments(bundle);
                         ft.replace(R.id.frame_layout, familyFragment).commit();
                         break;
                     case 5:
-                        FellowTownsManFragment ftmFragment = new FellowTownsManFragment();
+                        FellowTownsManRelationFragment ftmFragment = new FellowTownsManRelationFragment();
                         ftmFragment.setArguments(bundle);
                         ft.replace(R.id.frame_layout, ftmFragment).commit();
                         break;

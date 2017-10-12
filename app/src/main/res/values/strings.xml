@@ -20,5 +20,7 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">加载中</string>
     <string name="delete_contact">    将要删除联系人</string>
-    <string name="contact">联系人</string>
+    <string name="contact">提示：</string>
+    <string name="add">添加</string>
+    <string name="input_name">请输入姓名</string>
 </resources>

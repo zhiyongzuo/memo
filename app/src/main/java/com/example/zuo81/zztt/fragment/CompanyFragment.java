@@ -1,12 +1,10 @@
 package com.example.zuo81.zztt.fragment;
 
 
-import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -14,22 +12,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.ashokvarma.bottomnavigation.utils.Utils;
-import com.example.zuo81.zztt.CompanyWorkerActivity;
-import com.example.zuo81.zztt.DetailActivity;
 import com.example.zuo81.zztt.R;
 import com.example.zuo81.zztt.model.Name;
 import com.example.zuo81.zztt.model.Name2ViewBinder;
-import com.example.zuo81.zztt.model.NameViewBinder;
-import com.example.zuo81.zztt.model.PhoneInfo;
+import com.example.zuo81.zztt.model.PhoneInfoModel;
 import com.example.zuo81.zztt.ob.Function;
 import com.example.zuo81.zztt.ob.ObservableManager;
 import com.example.zuo81.zztt.utils.DBUtils;
-import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 
+import org.litepal.LitePal;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,9 +31,8 @@ import java.util.Map;
 import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
 
-import static com.example.zuo81.zztt.MainActivity.COMPANYWORKERACTIVITY_COMPANY_NAME;
-import static com.example.zuo81.zztt.fragment.ContactFragment.FUNCTION_WITH_PARAM_AND_RESULT;
-import static com.example.zuo81.zztt.fragment.ContactFragment.FUNCTION_WITH_PARAM_AND_RESULT_TWO;
+import static com.example.zuo81.zztt.utils.ConstantHelper.ITEM_CHANGE_COMPANY;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -63,24 +56,22 @@ public class CompanyFragment extends Fragment implements Function {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ObservableManager.newInstance().registerObserver(FUNCTION_WITH_PARAM_AND_RESULT_TWO, this);
+        ObservableManager.newInstance().registerObserver(ITEM_CHANGE_COMPANY, this);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.fragment_blank, container, false);
+        View view =  inflater.inflate(R.layout.fragment_contact, container, false);
         searchView = view.findViewById(R.id.search_view);
-        rv = view.findViewById(R.id.rv);
+        rv = view.findViewById(R.id.rv_fragment_contact);
 
         searchView.setIconifiedByDefault(true);
         searchView.setOnQueryTextListener(onQueryTextListener);
         searchView.setQueryHint("请输入查询姓名");
 
-        if (linearLayoutManager == null) {
-            linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, true);
-            linearLayoutManager.setStackFromEnd(true);
-        }
+        linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, true);
+        linearLayoutManager.setStackFromEnd(true);
         rv.setLayoutManager(linearLayoutManager);
         multiTypeAdapter = new MultiTypeAdapter();
         multiTypeAdapter.register(Name.class, new Name2ViewBinder(getContext()));
@@ -92,7 +83,8 @@ public class CompanyFragment extends Fragment implements Function {
     private void init() {
         Items items = new Items();
         List companyList = new ArrayList<>();
-        List<PhoneInfo> list = DBUtils.getAllPhoneInfo();
+        List<PhoneInfoModel> list = DBUtils.getAllPhoneInfo();
+        Logger.d(list.size());
         for(int i=0; i<list.size(); i++) {
             String s = list.get(i).getCompany();
             if (s!=null && !s.equals("") && !companyList.contains(s)) {
@@ -106,7 +98,11 @@ public class CompanyFragment extends Fragment implements Function {
 
     @Override
     public Object function(Object[] data) {
-        Logger.d("function");
+        String s = (String)data[0];
+        if(s!=null && s.equals(ITEM_CHANGE_COMPANY)) {
+            SQLiteDatabase db = LitePal.getDatabase();
+            Logger.d("db");
+        }
         init();
         return null;
     }
@@ -120,7 +116,7 @@ public class CompanyFragment extends Fragment implements Function {
         @Override
         public boolean onQueryTextChange(String newText) {
             Map<String, Long> map = new LinkedHashMap<>();
-            List<PhoneInfo> list = DBUtils.getAllPhoneInfo();
+            List<PhoneInfoModel> list = DBUtils.getAllPhoneInfo();
             for (int i=0; i<list.size(); i++) {
                 String s = list.get(i).getName();
                 if (s!=null && !s.equals("") && s.contains(newText)) {

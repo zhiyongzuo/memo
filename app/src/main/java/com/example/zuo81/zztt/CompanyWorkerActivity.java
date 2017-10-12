@@ -7,7 +7,6 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -17,7 +16,7 @@ import com.example.zuo81.zztt.model.Category;
 import com.example.zuo81.zztt.model.CategoryViewBinder;
 import com.example.zuo81.zztt.model.Name;
 import com.example.zuo81.zztt.model.NameViewBinder;
-import com.example.zuo81.zztt.model.PhoneInfo;
+import com.example.zuo81.zztt.model.PhoneInfoModel;
 import com.example.zuo81.zztt.utils.DBUtils;
 import com.example.zuo81.zztt.utils.Eyes;
 
@@ -66,7 +65,7 @@ public class CompanyWorkerActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        List<PhoneInfo> list = DBUtils.getPhoneInfoFromCompany(company);
+        List<PhoneInfoModel> list = DBUtils.getPhoneInfoFromCompany(company);
         adapter = new MultiTypeAdapter();
         adapter.register(Category.class, new CategoryViewBinder());
         adapter.register(Name.class, new NameViewBinder(CompanyWorkerActivity.this));
