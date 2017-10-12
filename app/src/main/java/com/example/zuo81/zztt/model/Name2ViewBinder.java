@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.zuo81.zztt.CompanyWorkerActivity;
-import com.example.zuo81.zztt.DetailActivity;
 import com.example.zuo81.zztt.R;
 import com.example.zuo81.zztt.utils.LetterTileProvider;
 
@@ -35,7 +34,7 @@ public class Name2ViewBinder extends ItemViewBinder<Name, Name2ViewBinder.ViewHo
     @NonNull
     @Override
     protected Name2ViewBinder.ViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
-        View root = inflater.inflate(R.layout.rv_company, parent, false);
+        View root = inflater.inflate(R.layout.item_contact_company, parent, false);
         return new ViewHolder(root);
     }
 

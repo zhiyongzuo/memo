@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,10 +22,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import me.drakeet.multitype.ItemViewBinder;
 
 import static com.example.zuo81.zztt.MainActivity.COMPANYWORKERACTIVITY_COMPANY_NAME;
-import static com.example.zuo81.zztt.MainActivity.COMPANYWORKERACTIVITY_ID;
-import static com.example.zuo81.zztt.MainActivity.COMPANYWORKERACTIVITY_POSITION;
-import static com.example.zuo81.zztt.utils.ConstantHelper.ITEM_CHANGE_CONTACT;
-import static com.example.zuo81.zztt.utils.ConstantHelper.ITEM_CHANGE_COMPANY;
+import static com.example.zuo81.zztt.utils.ConstantHelper.COMPANY_ITEM_CHANGE;
+import static com.example.zuo81.zztt.utils.ConstantHelper.CONTACT_ITEM_CHANGE;
 import static com.example.zuo81.zztt.utils.ConstantHelper.ITEM_DELETE_CONTACT;
 
 
@@ -44,7 +41,7 @@ public class NameViewBinder extends ItemViewBinder<Name, NameViewBinder.ViewHold
     @NonNull
     @Override
     protected ViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
-        View root = inflater.inflate(R.layout.rv_company, parent, false);
+        View root = inflater.inflate(R.layout.item_contact_company, parent, false);
         return new ViewHolder(root);
     }
 
@@ -56,7 +53,7 @@ public class NameViewBinder extends ItemViewBinder<Name, NameViewBinder.ViewHold
         holder.mImageView.setImageBitmap(mLetterTileProvider.getLetterTile(name.getName()));
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends ClickableViewHolder {
         private TextView mTextView;
         private TextView textViewId;
         private CircleImageView mImageView;
@@ -71,8 +68,6 @@ public class NameViewBinder extends ItemViewBinder<Name, NameViewBinder.ViewHold
                 public void onClick(View v) {
                     Intent intent = new Intent(v.getContext(), DetailActivity.class);
                     intent.putExtra(COMPANYWORKERACTIVITY_COMPANY_NAME, mTextView.getText());
-                    intent.putExtra(COMPANYWORKERACTIVITY_ID, Long.parseLong(textViewId.getText().toString()));
-                    intent.putExtra(COMPANYWORKERACTIVITY_POSITION, getAdapterPosition());
                     v.getContext().startActivity(intent);
                 }
             });
@@ -86,9 +81,9 @@ public class NameViewBinder extends ItemViewBinder<Name, NameViewBinder.ViewHold
                             Logger.d(Long.parseLong(textViewId.getText().toString()) +"  " + getAdapterPosition());
                             DBUtils.deleteFromId(Long.parseLong(textViewId.getText().toString()));
                             Object notify = ObservableManager.newInstance()
-                                    .notify(ITEM_CHANGE_CONTACT, ITEM_DELETE_CONTACT, getAdapterPosition());
+                                    .notify(CONTACT_ITEM_CHANGE, ITEM_DELETE_CONTACT, getAdapterPosition());
                             Object notify2 = ObservableManager.newInstance()
-                                    .notify(ITEM_CHANGE_COMPANY, ITEM_CHANGE_COMPANY);
+                                    .notify(COMPANY_ITEM_CHANGE);
                             Toast.makeText(view.getContext(), "删除成功", Toast.LENGTH_SHORT).show();
                         }
                     });

@@ -30,9 +30,9 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.zuo81.zztt.utils.ConstantHelper.COMPANY_ITEM_CHANGE;
 import static com.example.zuo81.zztt.utils.ConstantHelper.ITEM_ADD_CONTACT;
-import static com.example.zuo81.zztt.utils.ConstantHelper.ITEM_CHANGE_CONTACT;
-import static com.example.zuo81.zztt.utils.ConstantHelper.ITEM_CHANGE_COMPANY;
+import static com.example.zuo81.zztt.utils.ConstantHelper.CONTACT_ITEM_CHANGE;
 
 
 public class AddActivity extends AppCompatActivity{
@@ -95,10 +95,12 @@ public class AddActivity extends AppCompatActivity{
                 phoneInfoModel.setPhoto(photo);
                 DBUtils.savePhoneInfo(phoneInfoModel);
                 Logger.d(DBUtils.getAllPhoneInfo().size());
+                //因为viewpager加tablayout生命周期问题可能不会刷新，所以如下处理， 而不是放入fragment的onStrart()中刷新
+                //一定要有两个，否则contactFragment companyFragment会让companyFragment通知不到
                 Object notify = ObservableManager.newInstance()
-                        .notify(ITEM_CHANGE_CONTACT, ITEM_ADD_CONTACT, name, phoneInfoModel.getId());
+                        .notify(CONTACT_ITEM_CHANGE, ITEM_ADD_CONTACT, name, phoneInfoModel.getId());
                 Object notify2 = ObservableManager.newInstance()
-                        .notify(ITEM_CHANGE_COMPANY, ITEM_CHANGE_COMPANY);
+                        .notify(COMPANY_ITEM_CHANGE);
                 Toast.makeText(this, "添加成功", Toast.LENGTH_SHORT).show();
                 finish();
             } else {

@@ -26,6 +26,8 @@ import com.example.zuo81.zztt.fragment.CompanyFragment;
 import com.example.zuo81.zztt.fragment.ContactFragment;
 import com.example.zuo81.zztt.fragment.MeFragment;
 import com.example.zuo81.zztt.utils.PhotoHelper;
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.Logger;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -49,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
+        Logger.addLogAdapter(new AndroidLogAdapter());
         File directoryFile = new File(SD_DIRECTORY_PATH);
         if(!directoryFile.exists()) {
             directoryFile.mkdir();
