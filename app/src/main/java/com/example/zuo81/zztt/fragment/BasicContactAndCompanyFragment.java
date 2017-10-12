@@ -8,6 +8,7 @@ import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.example.zuo81.zztt.R;
 import com.example.zuo81.zztt.ob.Function;
@@ -19,7 +20,7 @@ import static com.example.zuo81.zztt.utils.ConstantHelper.CONTACT_AEROVANE;
  * A simple {@link Fragment} subclass.
  */
 public abstract class BasicContactAndCompanyFragment extends Fragment implements Function {
-    private SearchView searchView;
+    private SearchView mSearchView;
     public RecyclerView rv;
 
     public BasicContactAndCompanyFragment() {
@@ -30,16 +31,19 @@ public abstract class BasicContactAndCompanyFragment extends Fragment implements
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_contact_company, container, false);
-        searchView = view.findViewById(R.id.search_view);
+        mSearchView = view.findViewById(R.id.search_view);
         rv = view.findViewById(R.id.rv_fragment_contact);
 
-        searchView.setIconifiedByDefault(true);
-        searchView.setOnQueryTextListener(onQueryTextListener);
+        ImageView mSearchIcon= mSearchView.findViewById(R.id.search_button);
+        mSearchIcon.setImageResource(R.drawable.search_long);
+
+        mSearchView.setIconifiedByDefault(true);
+        mSearchView.setOnQueryTextListener(onQueryTextListener);
         String aerovane = getAerovane();
         if (aerovane!=null && aerovane.equals(CONTACT_AEROVANE)) {
-            searchView.setQueryHint("请输入查询姓名");
+            mSearchView.setQueryHint("请输入查询姓名");
         } else if(aerovane!=null && aerovane.equals(COMPANY_AEROVANE)) {
-            searchView.setQueryHint("请输入查询单位");
+            mSearchView.setQueryHint("请输入查询单位");
         }
         handleMultiTypeAdapter();
         return view;
