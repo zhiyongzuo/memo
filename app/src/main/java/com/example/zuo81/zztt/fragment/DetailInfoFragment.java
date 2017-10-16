@@ -30,7 +30,7 @@ import static com.example.zuo81.zztt.DetailActivity.DETAIL_ACTIVITY_NAME;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class InfoFragment extends Fragment {
+public class DetailInfoFragment extends Fragment {
     private TextView tv_name;
     private EditText tv_phone;
     private EditText tv_phone2;
@@ -51,10 +51,6 @@ public class InfoFragment extends Fragment {
     private PhoneInfoModel phoneInfoModel;
     private long id;
 
-    public InfoFragment() {
-        // Required empty public constructor
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -73,12 +69,9 @@ public class InfoFragment extends Fragment {
         Bundle bundle = getArguments();
         if(bundle != null) {
             name = (String)bundle.get(DETAIL_ACTIVITY_NAME);
-            id = (long)bundle.get(DETAIL_ACTIVITY_ID);
         }
-        phoneInfoModel = DBUtils.getPhoneInfoFromId(id);
-        if(phoneInfoModel==null) {
-            phoneInfoModel = DBUtils.getPhoneInfoFromName(name).get(0);
-        }
+        Logger.d(name);
+        phoneInfoModel = DBUtils.getPhoneInfoFromName(name).get(0);
 
         p1.setOnClickListener(listen2);
         msg1.setOnClickListener(listen2);
@@ -91,12 +84,12 @@ public class InfoFragment extends Fragment {
         tv_sex.setEnabled(false);
         tv_company.setEnabled(false);
 
+        id = phoneInfoModel.getId();
         phone = phoneInfoModel.getPhoneNumber();
         phone2 = phoneInfoModel.getPhoneNumber2();
         email = phoneInfoModel.getEmail();
         sex = phoneInfoModel.getSex();
         company = phoneInfoModel.getCompany();
-        Logger.d(phone);
         tv_phone.setText(phone);
         tv_phone2.setText(phone2);
         tv_email.setText(email);
@@ -135,7 +128,7 @@ public class InfoFragment extends Fragment {
                 phoneInfoModel.setEmail(tv_email.getText().toString());
                 phoneInfoModel.setSex(tv_sex.getText().toString());
                 phoneInfoModel.setCompany(tv_company.getText().toString());
-                DBUtils.updateFromId(phoneInfoModel, id);
+                DBUtils.updateFromName(phoneInfoModel, name);
                 if(tv_phone2!=null && tv_phone2.length()>0) {
                     p2.setVisibility(View.VISIBLE);
                     msg2.setVisibility(View.VISIBLE);
@@ -162,9 +155,9 @@ public class InfoFragment extends Fragment {
                         intent.setData(Uri.parse("tel:" + phone));
                         startActivity(intent);
                         //启动服务，在service中监听电话状态并进行重播提醒
-                        Intent callIntent = new Intent(getContext(), MyService.class);
+                     /*   Intent callIntent = new Intent(getContext(), MyService.class);
                         callIntent.putExtra("phone", phone);
-                        getContext().startService(callIntent);
+                        getContext().startService(callIntent);*/
                     }
                     break;
                 case R.id.msg_phone_1:
@@ -187,9 +180,9 @@ public class InfoFragment extends Fragment {
                             intent2.setData(Uri.parse("tel:" + phone2));
                             startActivity(intent2);
                             //启动服务，在service中监听电话状态并进行重播提醒
-                            Intent callIntent = new Intent(getContext(), MyService.class);
+                         /*   Intent callIntent = new Intent(getContext(), MyService.class);
                             callIntent.putExtra("phone", phone2);
-                            getContext().startService(callIntent);
+                            getContext().startService(callIntent);*/
                         }
                     }
                     break;

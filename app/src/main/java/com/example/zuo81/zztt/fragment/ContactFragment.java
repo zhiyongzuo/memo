@@ -24,6 +24,7 @@ import me.drakeet.multitype.MultiTypeAdapter;
 import static com.example.zuo81.zztt.utils.ConstantHelper.CONTACT_AEROVANE;
 import static com.example.zuo81.zztt.utils.ConstantHelper.ITEM_ADD_CONTACT;
 import static com.example.zuo81.zztt.utils.ConstantHelper.CONTACT_ITEM_CHANGE;
+import static com.example.zuo81.zztt.utils.ConstantHelper.ITEM_CHANGE_CONTACT;
 import static com.example.zuo81.zztt.utils.ConstantHelper.ITEM_DELETE_CONTACT;
 
 /**
@@ -58,6 +59,10 @@ public class ContactFragment extends BasicContactAndCompanyFragment {
         multiTypeAdapter = new MultiTypeAdapter();
         multiTypeAdapter.register(Name.class, new NameViewBinder(getContext()));
         rv.setAdapter(multiTypeAdapter);
+        initialRV();
+    }
+
+    private void initialRV() {
         items = new Items();
         List<PhoneInfoModel> list = DBUtils.getAllPhoneInfo();
         Logger.d(list.size());
@@ -87,74 +92,6 @@ public class ContactFragment extends BasicContactAndCompanyFragment {
         multiTypeAdapter.notifyDataSetChanged();
     }
 
-    /* @Override
-    public void onDestroy() {
-        super.onDestroy();
-        ObservableManager.newInstance().removeObserver(this);
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Logger.addLogAdapter(new AndroidLogAdapter());
-        ObservableManager.newInstance().registerObserver(CONTACT_ITEM_CHANGE, this);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.fragment_contact_company, container, false);
-        searchView = view.findViewById(R.id.search_view);
-        rv = view.findViewById(R.id.rv_fragment_contact);
-
-        searchView.setIconifiedByDefault(true);
-        searchView.setOnQueryTextListener(onQueryTextListener);
-        searchView.setQueryHint("请输入查询姓名");
-
-        linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, true);
-        linearLayoutManager.setStackFromEnd(true);
-        rv.setLayoutManager(linearLayoutManager);
-        multiTypeAdapter = new MultiTypeAdapter();
-        multiTypeAdapter.register(Name.class, new NameViewBinder(getContext()));
-        rv.setAdapter(multiTypeAdapter);
-        items = new Items();
-        List<PhoneInfoModel> list = DBUtils.getAllPhoneInfo();
-        Logger.d(list.size());
-        for(int i=0; i<list.size(); i++) {
-            items.add(new Name(list.get(i).getName(), list.get(i).getId()));
-        }
-        multiTypeAdapter.setItems(items);
-        multiTypeAdapter.notifyDataSetChanged();
-        return view;
-    }
-
-    SearchView.OnQueryTextListener onQueryTextListener = new SearchView.OnQueryTextListener() {
-        @Override
-        public boolean onQueryTextSubmit(String query) {
-            return false;
-        }
-
-        @Override
-        public boolean onQueryTextChange(String newText) {
-            Map<String, Long> map = new LinkedHashMap<>();
-            List<PhoneInfoModel> list = DBUtils.getAllPhoneInfo();
-            for (int i=0; i<list.size(); i++) {
-                String s = list.get(i).getName();
-                if (s!=null && !s.equals("") && s.contains(newText)) {
-                    map.put(list.get(i).getName(), list.get(i).getId());
-                }
-            }
-            items2 = new Items();
-            for(Object oj : map.keySet()) {
-                String s = (String)oj;
-                items2.add(new Name(s, map.get(s)));
-            }
-            multiTypeAdapter.setItems(items2);
-            multiTypeAdapter.notifyDataSetChanged();
-            return false;
-        }
-    };*/
-
     @Override
     public Object function(Object[] data) {
         Logger.d(data);
@@ -177,8 +114,8 @@ public class ContactFragment extends BasicContactAndCompanyFragment {
                 /*multiTypeAdapter.getItems().remove(Arrays.asList(data).get(1));//这两行会导致item立刻删掉，但把item滑动出屏幕后再滑回原位置，被删除的item又出现了
                 multiTypeAdapter.notifyItemRemoved((int)Arrays.asList(data).get(1));*/
                 break;
-            case CONTACT_ITEM_CHANGE:
-                onDestroy();
+            case ITEM_CHANGE_CONTACT:
+                initialRV();
                 break;
             default:
                 break;

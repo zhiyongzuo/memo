@@ -41,7 +41,7 @@ public class MeFragment extends Fragment {
         items = new Items();
         items.add(new Card(R.drawable.me, "我", ME));
         items.add(new Card(R.drawable.local_backup, "备份", LOCAL_UPLOAD));
-        items.add(new Card(R.drawable.local_download, "回滚至上次备份（应用将会重启）", LOCAL_DOWNLOAD));
+        items.add(new Card(R.drawable.local_download, "回滚至上次备份（app将会重启）", LOCAL_DOWNLOAD));
         multiTypeAdapter.setItems(items);
     }
 

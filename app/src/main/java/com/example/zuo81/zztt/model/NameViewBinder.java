@@ -71,6 +71,7 @@ public class NameViewBinder extends ItemViewBinder<Name, NameViewBinder.ViewHold
                     v.getContext().startActivity(intent);
                 }
             });
+            //能实现滑动删除吗
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(final View view) {

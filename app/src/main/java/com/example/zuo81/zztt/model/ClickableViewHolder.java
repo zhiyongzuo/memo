@@ -1,9 +1,14 @@
 package com.example.zuo81.zztt.model;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.Environment;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.zuo81.zztt.DetailActivity;
+import com.example.zuo81.zztt.LoginActivity;
 import com.example.zuo81.zztt.utils.RestartAPPTool;
 
 import java.io.File;
@@ -12,17 +17,19 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
 
-import static com.example.zuo81.zztt.utils.ConstantHelper.DATA_DATABASE_PATH;
-import static com.example.zuo81.zztt.utils.ConstantHelper.SD_DATABASE_PATH;
+import static com.example.zuo81.zztt.utils.ConstantHelper.APP_NAME;
+import static com.example.zuo81.zztt.utils.ConstantHelper.LOGIN_NAME;
 import static com.example.zuo81.zztt.utils.ConstantHelper.LOCAL_DOWNLOAD;
 import static com.example.zuo81.zztt.utils.ConstantHelper.LOCAL_UPLOAD;
 import static com.example.zuo81.zztt.utils.ConstantHelper.ME;
+import static com.example.zuo81.zztt.utils.ConstantHelper.SHARED_PREFERENCE_NAME_LOGIN;
 
 /**
  * Created by zuo81 on 2017/10/11.
  */
 
 public class ClickableViewHolder extends RecyclerView.ViewHolder {
+    public static String SD_DIRECTORY_PATH = Environment.getExternalStorageDirectory() + "/" + APP_NAME;
     private String ACTION;
 
     public void setAction(String ACTION) {
@@ -34,8 +41,22 @@ public class ClickableViewHolder extends RecyclerView.ViewHolder {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Context mContext = view.getContext();
+                String DATABASE_NAME = mContext.getSharedPreferences(SHARED_PREFERENCE_NAME_LOGIN, Context.MODE_PRIVATE).getString(LOGIN_NAME, APP_NAME) + ".db";
+                String SD_DATABASE_PATH = SD_DIRECTORY_PATH + "/" + DATABASE_NAME;
+                String DATA_DATABASE_PATH = "/data/data/com.example.zuo81.zztt/databases/" + DATABASE_NAME;
                 if(ACTION != null) {
                     switch(ACTION) {
+                        case ME:
+                            String loginName = view.getContext()
+                                    .getSharedPreferences(SHARED_PREFERENCE_NAME_LOGIN, Context.MODE_PRIVATE)
+                                    .getString(LOGIN_NAME, APP_NAME);
+                            if (loginName.equals(APP_NAME)) {
+                                mContext.startActivity(new Intent(mContext, LoginActivity.class));
+                            }else {
+                                mContext.startActivity(new Intent(mContext, DetailActivity.class));
+                            }
+                            break;
                         //copy db
                         case LOCAL_UPLOAD:
                             deleteOutputFileAndCreateInputFile(SD_DATABASE_PATH, DATA_DATABASE_PATH);
@@ -49,8 +70,6 @@ public class ClickableViewHolder extends RecyclerView.ViewHolder {
                             Object notify2 = ObservableManager.newInstance()
                                     .notify(ITEM_CHANGE_COMPANY, ITEM_CHANGE_COMPANY);*/
                             //Toast.makeText(view.getContext(), "已还原至上次备份", Toast.LENGTH_SHORT).show();
-                            break;
-                        case ME:
                             break;
                         default:
                             break;

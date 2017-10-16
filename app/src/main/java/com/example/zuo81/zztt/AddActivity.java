@@ -138,7 +138,7 @@ public class AddActivity extends AppCompatActivity{
             } else {
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if (!this.shouldShowRequestPermissionRationale(Manifest.permission.CALL_PHONE)) {
+                    if (!this.shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)) {
                         //用户已经完全拒绝，或手动关闭了权限开启此对话框缓解一下尴尬...
                         AlertDialog dialog = new AlertDialog.Builder(this)
                                 .setMessage("不开启该权限将无法正常工作，请在设置中手动开启！")

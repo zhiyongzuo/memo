@@ -33,7 +33,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.zuo81.zztt.utils.ConstantHelper.SD_DIRECTORY_PATH;
+import static com.example.zuo81.zztt.model.ClickableViewHolder.SD_DIRECTORY_PATH;
+
 
 public class MainActivity extends AppCompatActivity {
     public static String COMPANYWORKERACTIVITY_COMPANY_NAME = "COMPANY_WORKER_ACTIVITY_COMPANY_NAME";

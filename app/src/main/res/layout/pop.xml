@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/pop_change_img_text_view"
+        android:text="@string/change_pic"
+        android:textSize="@dimen/tile_letter_font_size"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"/>
+    <LinearLayout
+        android:id="@+id/linear_layout_for_edit_text_and_button_popup_window"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <EditText
+            android:id="@+id/edit_text_for_change_name"
+            android:hint="@string/input_name"
+            android:background="@drawable/editsharp"
+            android:layout_margin="5dp"
+            android:layout_weight="4"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+        <Button
+            android:id="@+id/button_for_change_name"
+            android:hint="@string/input_name"
+            android:background="@drawable/editsharp"
+            android:text="@string/sure"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+
+</LinearLayout>
