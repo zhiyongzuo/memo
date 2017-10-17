@@ -31,14 +31,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.zuo81.zztt.ob.ObservableManager;
 import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.zuo81.zztt.utils.ConstantHelper.APP_NAME;
+import static com.example.zuo81.zztt.utils.ConstantHelper.CONTACT_ITEM_CHANGE;
+import static com.example.zuo81.zztt.utils.ConstantHelper.ITEM_CHANGE_ME;
+import static com.example.zuo81.zztt.utils.ConstantHelper.ITEM_DELETE_CONTACT;
 import static com.example.zuo81.zztt.utils.ConstantHelper.LOGIN_NAME;
 import static com.example.zuo81.zztt.utils.ConstantHelper.LOGIN_PASSWORD;
+import static com.example.zuo81.zztt.utils.ConstantHelper.ME_ITEM_CHANGE;
 import static com.example.zuo81.zztt.utils.ConstantHelper.SHARED_PREFERENCE_NAME_LOGIN;
 import static android.Manifest.permission.READ_CONTACTS;
 

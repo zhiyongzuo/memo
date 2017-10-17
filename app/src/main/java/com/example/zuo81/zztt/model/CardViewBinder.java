@@ -26,7 +26,7 @@ public class CardViewBinder extends ItemViewBinder<Card, CardViewBinder.ViewHold
 
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull Card card) {
-        holder.circleImageView.setImageResource(card.getAvatarResId());
+        holder.circleImageView.setImageBitmap(card.getBitmap());
         holder.textView.setText(card.getCardName());
         holder.setAction(card.getAction());
     }

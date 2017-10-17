@@ -9,12 +9,14 @@ import android.os.Environment;
 public class ConstantHelper {
     public static final String LOCAL_DOWNLOAD = "LOCAL_DOWNLOAD";
     public static final String LOCAL_UPLOAD = "LOCAL_UPLOAD";
-    public static final String ME = "ME";
+    public static final String ME = "我";
     public static final String START_DETAIL_ACTIVITY = "START_DETAIL_ACTIVITY";
     public static final String CONTACT_ITEM_CHANGE = "CONTACT_ITEM_CHANGE";
+    public static final String ME_ITEM_CHANGE = "ME_ITEM_CHANGE";
     public static final String COMPANY_ITEM_CHANGE = "COMPANY_ITEM_CHANGE";
     public static final String ITEM_ADD_CONTACT = "ITEM_ADD_CONTACT";
     public static final String ITEM_DELETE_CONTACT = "ITEM_DELETE_CONTACT";
+    public static final String ITEM_CHANGE_ME = "ITEM_CHANGE_ME";
     public static final String ITEM_CHANGE_CONTACT = "ITEM_CHANGE_CONTACT";
     public static final String ITEM_CHANGE_COMPANY = "ITEM_CHANGE_COMPANY";
     public static final String APP_NAME = "OMC";

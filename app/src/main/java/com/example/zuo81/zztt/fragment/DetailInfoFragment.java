@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,12 +20,15 @@ import android.widget.Toast;
 
 import com.example.zuo81.zztt.R;
 import com.example.zuo81.zztt.model.PhoneInfoModel;
+import com.example.zuo81.zztt.ob.ObservableManager;
 import com.example.zuo81.zztt.service.MyService;
 import com.example.zuo81.zztt.utils.DBUtils;
 import com.orhanobut.logger.Logger;
 
 import static com.example.zuo81.zztt.DetailActivity.DETAIL_ACTIVITY_ID;
 import static com.example.zuo81.zztt.DetailActivity.DETAIL_ACTIVITY_NAME;
+import static com.example.zuo81.zztt.utils.ConstantHelper.COMPANY_ITEM_CHANGE;
+import static com.example.zuo81.zztt.utils.ConstantHelper.ITEM_CHANGE_COMPANY;
 
 
 /**
@@ -122,6 +126,7 @@ public class DetailInfoFragment extends Fragment {
                 tv_email.setEnabled(false);
                 tv_sex.setEnabled(false);
                 tv_company.setEnabled(false);
+                String companyStr = tv_company.getText().toString();
                 PhoneInfoModel phoneInfoModel = new PhoneInfoModel();
                 phoneInfoModel.setPhoneNumber(tv_phone.getText().toString());
                 phoneInfoModel.setPhoneNumber2(tv_phone2.getText().toString());
@@ -129,6 +134,10 @@ public class DetailInfoFragment extends Fragment {
                 phoneInfoModel.setSex(tv_sex.getText().toString());
                 phoneInfoModel.setCompany(tv_company.getText().toString());
                 DBUtils.updateFromName(phoneInfoModel, name);
+                if(!TextUtils.isEmpty(companyStr)) {
+                    Object notify2 = ObservableManager.newInstance()
+                            .notify(COMPANY_ITEM_CHANGE, ITEM_CHANGE_COMPANY);
+                }
                 if(tv_phone2!=null && tv_phone2.length()>0) {
                     p2.setVisibility(View.VISIBLE);
                     msg2.setVisibility(View.VISIBLE);

@@ -33,6 +33,7 @@ import java.util.List;
 import static com.example.zuo81.zztt.utils.ConstantHelper.COMPANY_ITEM_CHANGE;
 import static com.example.zuo81.zztt.utils.ConstantHelper.ITEM_ADD_CONTACT;
 import static com.example.zuo81.zztt.utils.ConstantHelper.CONTACT_ITEM_CHANGE;
+import static com.example.zuo81.zztt.utils.ConstantHelper.ITEM_CHANGE_COMPANY;
 
 
 public class AddActivity extends AppCompatActivity{
@@ -100,7 +101,7 @@ public class AddActivity extends AppCompatActivity{
                 Object notify = ObservableManager.newInstance()
                         .notify(CONTACT_ITEM_CHANGE, ITEM_ADD_CONTACT, name, phoneInfoModel.getId());
                 Object notify2 = ObservableManager.newInstance()
-                        .notify(COMPANY_ITEM_CHANGE);
+                        .notify(COMPANY_ITEM_CHANGE, ITEM_CHANGE_COMPANY);
                 Toast.makeText(this, "添加成功", Toast.LENGTH_SHORT).show();
                 finish();
             } else {

@@ -20,7 +20,9 @@ import com.example.zuo81.zztt.ob.ObservableManager;
 import com.example.zuo81.zztt.utils.DBUtils;
 import com.orhanobut.logger.Logger;
 
+import java.sql.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,6 +69,41 @@ public class CompanyFragment extends BasicContactAndCompanyFragment {
         init();
     }
 
+
+
+    @Override
+    public Object function(Object[] data) {
+        String s = (String)Arrays.asList(data).get(0);
+        switch(s) {
+            case ITEM_CHANGE_COMPANY:
+                init();
+            break;
+        }
+        return null;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        init();
+    }
+
+    private void init() {
+        Items items = new Items();
+        List companyList = new ArrayList<>();
+        List<PhoneInfoModel> list = DBUtils.getAllPhoneInfo();
+        Logger.d(list.size());
+        for(int i=0; i<list.size(); i++) {
+            String s = list.get(i).getCompany();
+            if (s!=null && !s.equals("") && !companyList.contains(s)) {
+                companyList.add(s);
+                items.add(new Name(s));
+            }
+        }
+        multiTypeAdapter.setItems(items);
+        multiTypeAdapter.notifyDataSetChanged();
+    }
+
     @Override
     public void handleOnQueryTextChange(String newText) {
         Map<String, Long> map = new LinkedHashMap<>();
@@ -85,118 +122,4 @@ public class CompanyFragment extends BasicContactAndCompanyFragment {
         multiTypeAdapter.setItems(items2);
         multiTypeAdapter.notifyDataSetChanged();
     }
-
-    @Override
-    public Object function(Object[] data) {
-        init();
-        return null;
-    }
-
-    private void init() {
-        Items items = new Items();
-        List companyList = new ArrayList<>();
-        List<PhoneInfoModel> list = DBUtils.getAllPhoneInfo();
-        Logger.d(list.size());
-        for(int i=0; i<list.size(); i++) {
-            String s = list.get(i).getCompany();
-            if (s!=null && !s.equals("") && !companyList.contains(s)) {
-                companyList.add(s);
-                items.add(new Name(s));
-            }
-        }
-        multiTypeAdapter.setItems(items);
-        multiTypeAdapter.notifyDataSetChanged();
-    }
-
-    /* private RecyclerView rv;
-    private MultiTypeAdapter multiTypeAdapter;
-    private Items items2;
-    private LinearLayoutManager linearLayoutManager;
-    private SearchView searchView;
-
-
-    public CompanyFragment() {
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        ObservableManager.newInstance().removeObserver(this);
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        ObservableManager.newInstance().registerObserver(ITEM_CHANGE_COMPANY, this);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.fragment_contact_company, container, false);
-        searchView = view.findViewById(R.id.search_view);
-        rv = view.findViewById(R.id.rv_fragment_contact);
-
-        searchView.setIconifiedByDefault(true);
-        searchView.setOnQueryTextListener(onQueryTextListener);
-        searchView.setQueryHint("请输入查询姓名");
-
-        linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, true);
-        linearLayoutManager.setStackFromEnd(true);
-        rv.setLayoutManager(linearLayoutManager);
-        multiTypeAdapter = new MultiTypeAdapter();
-        multiTypeAdapter.register(Name.class, new Name2ViewBinder(getContext()));
-        rv.setAdapter(multiTypeAdapter);
-        init();
-        return view;
-    }
-
-    private void init() {
-        Items items = new Items();
-        List companyList = new ArrayList<>();
-        List<PhoneInfoModel> list = DBUtils.getAllPhoneInfo();
-        Logger.d(list.size());
-        for(int i=0; i<list.size(); i++) {
-            String s = list.get(i).getCompany();
-            if (s!=null && !s.equals("") && !companyList.contains(s)) {
-                companyList.add(s);
-                items.add(new Name(s));
-            }
-        }
-        multiTypeAdapter.setItems(items);
-        multiTypeAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public Object function(Object[] data) {
-        init();
-        return null;
-    }
-
-    SearchView.OnQueryTextListener onQueryTextListener = new SearchView.OnQueryTextListener() {
-        @Override
-        public boolean onQueryTextSubmit(String query) {
-            return false;
-        }
-
-        @Override
-        public boolean onQueryTextChange(String newText) {
-            Map<String, Long> map = new LinkedHashMap<>();
-            List<PhoneInfoModel> list = DBUtils.getAllPhoneInfo();
-            for (int i=0; i<list.size(); i++) {
-                String s = list.get(i).getName();
-                if (s!=null && !s.equals("") && s.contains(newText)) {
-                    map.put(list.get(i).getName(), list.get(i).getId());
-                }
-            }
-            items2 = new Items();
-            for(Object oj : map.keySet()) {
-                String s = (String)oj;
-                items2.add(new Name(s, map.get(s)));
-            }
-            multiTypeAdapter.setItems(items2);
-            multiTypeAdapter.notifyDataSetChanged();
-            return false;
-        }
-    };*/
 }

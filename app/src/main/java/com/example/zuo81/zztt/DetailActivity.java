@@ -36,7 +36,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.zuo81.zztt.fragment.ArmyFriendRelationFragment;
 import com.example.zuo81.zztt.fragment.DetailInfoFragment;
@@ -63,7 +62,6 @@ import static com.example.zuo81.zztt.MainActivity.COMPANYWORKERACTIVITY_COMPANY_
 import static com.example.zuo81.zztt.utils.ConstantHelper.APP_NAME;
 import static com.example.zuo81.zztt.utils.ConstantHelper.CONTACT_ITEM_CHANGE;
 import static com.example.zuo81.zztt.utils.ConstantHelper.ITEM_CHANGE_CONTACT;
-import static com.example.zuo81.zztt.utils.ConstantHelper.ITEM_DELETE_CONTACT;
 import static com.example.zuo81.zztt.utils.ConstantHelper.LOGIN_NAME;
 import static com.example.zuo81.zztt.utils.ConstantHelper.PUT_EXTRA_NAME_EDIT_ACTIVITY;
 import static com.example.zuo81.zztt.utils.ConstantHelper.REQUEST_CODE_GET_EDIT_NAME;
@@ -116,7 +114,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
             photo = list.get(0).getPhoto();
             id = list.get(0).getId();
         }
-        Bitmap bitmap = getLoacalBitmap(photo); //根据路径从本地取图片
+        Bitmap bitmap = getLocalBitmap(photo); //根据路径从本地取图片
         imageView.setImageBitmap(bitmap);    //设置Bitmap
         imageView.setOnClickListener(this);
 
@@ -280,7 +278,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
      * @param url
      * @return
      */
-    public static Bitmap getLoacalBitmap(String url) {
+    public static Bitmap getLocalBitmap(String url) {
         try {
             if (url != null && !url.equals("")) {
                 FileInputStream fis = new FileInputStream(url);
@@ -372,7 +370,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
                     break;
                 case PhotoHelper.REQUEST_PHOTO_CROP:
                     //在这里显示或处理裁剪后的照片
-                    Bitmap bitmap = getLoacalBitmap(imgPath); //从本地取图片
+                    Bitmap bitmap = getLocalBitmap(imgPath); //从本地取图片
                     imageView.setImageBitmap(bitmap);    //设置Bitmap
                     PhoneInfoModel phoneInfoModel = new PhoneInfoModel();
                     phoneInfoModel.setPhoto(imgPath);
