@@ -38,11 +38,9 @@ import static com.example.zuo81.zztt.model.ClickableViewHolder.SD_DIRECTORY_PATH
 
 public class MainActivity extends AppCompatActivity {
     public static String COMPANYWORKERACTIVITY_COMPANY_NAME = "COMPANY_WORKER_ACTIVITY_COMPANY_NAME";
-    public static String COMPANYWORKERACTIVITY_ID = "5795802";
-    public static String COMPANYWORKERACTIVITY_POSITION = "COMPANY_WORKER_id_JGKJG";
     private List<Fragment> list;
     private MyFragmentPagerAdapter adapter;
-    private int i=0;
+    private long firstTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,16 +109,19 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (i!=2) {
-                Toast.makeText(this, "再按一次退出", Toast.LENGTH_SHORT).show();
-                i = 2;
-            } else {
-                i=0;
+        if(keyCode == KeyEvent.KEYCODE_BACK) {
+            long secondTime = System.currentTimeMillis();
+            if(secondTime - firstTime < 2000) {
+                //System.exit(0);
                 finish();
+            } else {
+                Toast.makeText(this, "再按一次退出", Toast.LENGTH_SHORT).show();
+                firstTime = System.currentTimeMillis();
+                return true;
             }
         }
-        return false;
+        return super.onKeyDown(keyCode, event);
     }
 }

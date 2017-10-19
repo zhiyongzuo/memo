@@ -236,7 +236,6 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View view) {
         mChangeTextView.setVisibility(View.VISIBLE);
-        mLinearLayout.setVisibility(View.GONE);
         showPopWindow();
     }
 

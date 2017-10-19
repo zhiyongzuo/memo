@@ -4,11 +4,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Environment;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.zuo81.zztt.DetailActivity;
 import com.example.zuo81.zztt.LoginActivity;
+import com.example.zuo81.zztt.R;
 import com.example.zuo81.zztt.utils.RestartAPPTool;
 
 import java.io.File;
@@ -47,16 +52,6 @@ public class ClickableViewHolder extends RecyclerView.ViewHolder {
                 String DATA_DATABASE_PATH = "/data/data/com.example.zuo81.zztt/databases/" + DATABASE_NAME;
                 if(ACTION != null) {
                     switch(ACTION) {
-                        case ME:
-                            String loginName = view.getContext()
-                                    .getSharedPreferences(SHARED_PREFERENCE_NAME_LOGIN, Context.MODE_PRIVATE)
-                                    .getString(LOGIN_NAME, APP_NAME);
-                            if (loginName.equals(APP_NAME)) {
-                                mContext.startActivity(new Intent(mContext, LoginActivity.class));
-                            }else {
-                                mContext.startActivity(new Intent(mContext, DetailActivity.class));
-                            }
-                            break;
                         //copy db
                         case LOCAL_UPLOAD:
                             deleteOutputFileAndCreateInputFile(SD_DATABASE_PATH, DATA_DATABASE_PATH);
@@ -65,11 +60,6 @@ public class ClickableViewHolder extends RecyclerView.ViewHolder {
                         case LOCAL_DOWNLOAD:
                             deleteOutputFileAndCreateInputFile(DATA_DATABASE_PATH, SD_DATABASE_PATH);
                             RestartAPPTool.restartAPP(view.getContext(), 0);
-                            /*Object notify = ObservableManager.newInstance()
-                                    .notify(CONTACT_ITEM_CHANGE, CONTACT_ITEM_CHANGE);
-                            Object notify2 = ObservableManager.newInstance()
-                                    .notify(ITEM_CHANGE_COMPANY, ITEM_CHANGE_COMPANY);*/
-                            //Toast.makeText(view.getContext(), "已还原至上次备份", Toast.LENGTH_SHORT).show();
                             break;
                         default:
                             break;

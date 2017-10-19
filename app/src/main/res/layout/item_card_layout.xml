@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingTop="16dp"
+    android:paddingLeft="12dp"
+    android:paddingBottom="16dp"
+    android:paddingRight="16dp"
+    android:layout_marginBottom="12dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginLeft="12dp"
+    android:layout_marginRight="12dp"
+    android:descendantFocusability="afterDescendants"
+    android:background="@drawable/card">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/item_card_circle_image_view"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        tools:src="#000000"/>
+    <TextView
+        android:id="@+id/item_card_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@id/item_card_circle_image_view"
+        app:layout_constraintTop_toTopOf="@id/item_card_circle_image_view"
+        app:layout_constraintBottom_toBottomOf="@id/item_card_circle_image_view"
+        android:textSize="@dimen/font_card"
+        android:layout_marginLeft="30dp"
+        tools:text="#000000"/>
+    <TextView
+        android:id="@+id/item_card_text_view_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/switch_account"
+        app:layout_constraintTop_toTopOf="@id/item_card_text_view"
+        app:layout_constraintBottom_toBottomOf="@id/item_card_text_view"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+</android.support.constraint.ConstraintLayout>

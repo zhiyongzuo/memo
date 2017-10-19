@@ -33,4 +33,6 @@ public class ConstantHelper {
     public static final int REQUEST_CODE_GET_EDIT_NAME = 8475;
     public static final int RESULT_CODE_GET_EDIT_NAME = 8475;
     public static final String PUT_EXTRA_NAME_EDIT_ACTIVITY = "847574398GKJR";
+
+    public static final int TYPE_CARD = 249;
 }
