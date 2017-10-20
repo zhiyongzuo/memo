@@ -2,6 +2,7 @@ package com.example.zuo81.zztt.fragment;
 
 
 import android.Manifest;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
@@ -126,13 +127,14 @@ public class MeFragment extends Fragment{
             multiTypeAdapter.notifyDataSetChanged();
         }
     }
-
+    @TargetApi(16)
     @NeedsPermission({Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
     void operateExternalStorage() {
         Context mContext = getContext();
-        String DATABASE_NAME = mContext.getSharedPreferences(SHARED_PREFERENCE_NAME_LOGIN, Context.MODE_PRIVATE).getString(LOGIN_NAME, APP_NAME) + ".db";
+        String DATABASE_NAME = mContext.getSharedPreferences(SHARED_PREFERENCE_NAME_LOGIN, Context.MODE_PRIVATE)
+                .getString(LOGIN_NAME, APP_NAME) + ".db";
         String SD_DATABASE_PATH = SD_DIRECTORY_PATH + "/" + DATABASE_NAME;
-        String DATA_DATABASE_PATH = "/data/data/com.example.zuo81.zztt/databases/" + DATABASE_NAME;
+        String DATA_DATABASE_PATH = "/data/data/com.example.zuo81.zztt/databases/" + "connection.db";
         if(ACTION != null) {
             switch(ACTION) {
                 //copy db
