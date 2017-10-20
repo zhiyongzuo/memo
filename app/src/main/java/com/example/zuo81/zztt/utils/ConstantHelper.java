@@ -7,8 +7,8 @@ import android.os.Environment;
  */
 
 public class ConstantHelper {
-    public static final String LOCAL_DOWNLOAD = "LOCAL_DOWNLOAD";
-    public static final String LOCAL_UPLOAD = "LOCAL_UPLOAD";
+    public static final String ACTION_LOCAL_DOWNLOAD = "ACTION_LOCAL_DOWNLOAD";
+    public static final String ACTION_LOCAL_UPLOAD = "ACTION_LOCAL_UPLOAD";
     public static final String ME = "我";
     public static final String START_DETAIL_ACTIVITY = "START_DETAIL_ACTIVITY";
     public static final String CONTACT_ITEM_CHANGE = "CONTACT_ITEM_CHANGE";
@@ -35,4 +35,6 @@ public class ConstantHelper {
     public static final String PUT_EXTRA_NAME_EDIT_ACTIVITY = "847574398GKJR";
 
     public static final int TYPE_CARD = 249;
+
+    public static String SD_DIRECTORY_PATH = Environment.getExternalStorageDirectory() + "/" + APP_NAME;
 }

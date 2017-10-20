@@ -60,4 +60,7 @@ dependencies {
     compile 'com.tencent.bugly:crashreport_upgrade:latest.release'
     compile 'com.tencent.bugly:nativecrashreport:latest.release'
     testCompile 'junit:junit:4.12'
+
+    compile 'com.github.hotchemi:permissionsdispatcher:3.0.1'
+    annotationProcessor "com.github.hotchemi:permissionsdispatcher-processor:3.0.1"
 }

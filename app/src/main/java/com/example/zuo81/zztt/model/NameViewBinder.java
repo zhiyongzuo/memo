@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,7 +38,7 @@ import static org.litepal.LitePalApplication.getContext;
 public class NameViewBinder extends ItemViewBinder<Name, NameViewBinder.ViewHolder> {
     private Context mContext;
     private Bitmap bitmap;
-    private LetterTileProvider mLetterTileProvider;
+    LetterTileProvider mLetterTileProvider;
 
     public NameViewBinder(Context mContext) {
         this.mContext = mContext;
@@ -63,10 +64,10 @@ public class NameViewBinder extends ItemViewBinder<Name, NameViewBinder.ViewHold
         } else {
             bitmap = new LetterTileProvider(getContext()).getLetterTile(nameStr);
         }
-        holder.mImageView.setImageBitmap(mLetterTileProvider.getLetterTile(name.getName()));
+        holder.mImageView.setImageBitmap(bitmap);
     }
 
-    static class ViewHolder extends ClickableViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
         private TextView mTextView;
         private TextView textViewId;
         private CircleImageView mImageView;
